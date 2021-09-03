@@ -7,12 +7,30 @@ const cors = require('cors');
 app.use(cors());
 require('dotenv').config();
 const axios = require('axios');
+const mongoose = require('mongoose');
+const GameModel = require('./models/GamesModel');
+const ClearGames = require('./modules/ClearGames');
+const SeedGames = require('./modules/SeedGames');
+app.use(express.json())
 
+let TClientID = process.env.TWITCH_CLIENT_ID;
+let tAccessToken = process.env.TWITCH_APP_ACCESS_TOKEN
+const PORT = process.env.PORT
 
+mongoose.connect('mongodb://127.0.0.1:27017/games', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(async () => {
+    console.log('Connected to the database')
+  })
 
 
 
 //-------------------routes---------------//
+
+app.get('/clear', ClearGames);
+app.get('/seed', SeedGames);
 
 app.get('/coming_soon', async (req, res) => {
 
@@ -26,8 +44,8 @@ app.get('/coming_soon', async (req, res) => {
       method: 'post',
       url: 'https://api.igdb.com/v4/games',
       headers: {
-        'client-id': process.env.TWITCH_CLIENT_ID,
-        'authorization': `bearer ${process.env.TWITCH_APP_ACCESS_TOKEN}`
+        'client-id': TClientID,
+        'authorization': `Bearer ${tAccessToken}`
       },
 // passing in todays date, so we filter out games with first release date that are in the future. Also passing Offset, which tells the API how many first results to skip (for pagination purposes). 
 // Offset increments from the front-end end has to be equal to limit.
@@ -40,6 +58,33 @@ app.get('/coming_soon', async (req, res) => {
     console.log(error);
   }
 })
+
+app.get('/gamelist', (req,res) => {
+  try {
+    GameModel.find((err, gamesdb) => {
+      res.status(200).send(gamesdb)
+    })
+  } catch (err) {
+    res.status(500).send(`The Database encountered and error: ${err}`);
+  }
+})
+
+app.post('/gamelist', (req,res) => {
+  try {
+    let {title, releaseDate, email, note} = req.body;
+    let newGame = new GameModel({title, releaseDate, email, note});
+    newGame.save();
+    res.send(newGame);
+  } catch (err) {
+    res.status(500).send('Something went wrong adding your Game. Please try again')
+  }
+});
+
+// app.delete('/gamelist/:id', (req,res) => {
+//   let gameID = req.params.id;
+//   let userEmail = req.params.email;
+//   if ()
+// })
 
 
 
@@ -56,4 +101,4 @@ app.get('/*', (req, res) => {
   res.status(404).send('Path does not exists');
 });
 
-app.listen(process.env.PORT || 3001, () => console.log(`Server listening on 3001`));
+app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
