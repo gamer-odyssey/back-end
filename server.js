@@ -36,12 +36,29 @@ app.get('/coming_soon', Upcoming);
 app.get('/gamelist', GameList);
 app.post('/gamelist', AddToGameList);
 
-// app.delete('/gamelist/:id', (req,res) => {
-//   let gameID = req.params.id;
-//   let userEmail = req.params.email;
-//   if ()
-// })
+app.delete('/gamelist/:id', async (req, res) => {
+  try {
+    let gameID = req.params.id;
+    await GameModel.findByIdAndDelete(gameID)
+    console.log(gameID)
+    res.status(200).send(`Successfully Removed game ID: ${gameID}`);
+  }
+  catch (err){
+    res.status(500).send('Error removing your game. Please try again.')
+  }
+})
 
+app.put('/gamelist/:id', async (req, res) => {
+  try{
+    let gameID = req.params.id;
+    let {title, releaseDate, email, note} = req.body;
+    const updatedGame = await GameModel.findByIdAndUpdate(gameID, {title, releaseDate, email, note}, {new:true, overwrite: true});
+    res.status(200).send(updatedGame);
+  }
+  catch(err){
+    res.status(500).send('Unable to update book try again')
+  }
+})
 
 
 
