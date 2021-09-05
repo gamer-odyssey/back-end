@@ -1,11 +1,12 @@
-'use strict'
+'use strict';
+
+const jwt = require('jsonwebtoken');
+const getKey = require('./getKey.js');
 const GameModel = require('../models/GamesModel.js');
 
 function AddToGameList (req,res) {
-
-  console.log(req.body);
-
-
+  // const token = request.headers.authorization.split(' ')[1];
+  
   try {
     let {title, releaseDate, email, note} = req.body;
     let game = {title, releaseDate, email, note};

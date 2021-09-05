@@ -22,13 +22,13 @@ async function SeedGames(req, res) {
       await AddGame({
         title: "Back 4 Blood",
         releaseDate: "October, 12 2021",
-        email: "alex.payne1125@gmail.com",
+        email: "gimranov45@gmail.com",
         note: "How Far back can you throw it",
       });
       await AddGame({
         title: "Halo Infinite",
         releaseDate: "December, 08 2021",
-        email: "alex.payne1125@gmail.com",
+        email: "gimranov45@gmail.com",
         note: "This game looks dope",
       });
     }

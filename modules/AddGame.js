@@ -7,4 +7,4 @@ async function AddGame(obj) {
   return await newGame.save();
 }
 
-module.exports = AddGame
+module.exports = AddGame;
