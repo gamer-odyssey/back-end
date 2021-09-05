@@ -9,7 +9,7 @@ function GameList(req, res) {
 
   try {
 
-    jwt.verify(token, getKey, {}, async function (err, user) {
+    jwt.verify(token, getKey, {}, function (err, user) {
       if (err) {
         response.status(500).send('invalid token');
       }
@@ -17,7 +17,7 @@ function GameList(req, res) {
       let email = req.query.email;
       if (email === user.email) {
 
-        await GameModel.find({ email }, (err, gamesdb) => {
+        GameModel.find({ email }, (err, gamesdb) => {
           res.status(200).send(gamesdb)
         })
 

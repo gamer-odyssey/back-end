@@ -55,13 +55,9 @@ app.delete('/gamelist/:id', (req, res) => {
   }
 });
 
-
-
-
 app.put('/gamelist/:id', (req, res) => {
 
-  const token = req.body.headers.authorization.split(' ')[1];
-  console.log(token);
+  const token = req.body.headers.authorization.split(' ')[1]; 
   
   try {
     jwt.verify(token, getKey, {}, async function (err, user) {
@@ -70,9 +66,7 @@ app.put('/gamelist/:id', (req, res) => {
         res.status(500).send('invalid token')
       }
       let gameID = req.params.id;
-      console.log(gameID);
       let email = req.body.params.email;
-      console.log(email);
       if (email === user.email) {
 
         let { title, releaseDate, email, note } = req.body.params;
