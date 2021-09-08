@@ -17,6 +17,7 @@ const AddToGameList = require('./modules/AddToGameList');
 const PORT = process.env.PORT
 const getKey = require('./modules/getKey');
 const jwt = require('jsonwebtoken');
+const SearchUpcoming = require('./modules/SearchUpcoming');
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -29,6 +30,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.get('/clear', ClearGames);
 app.get('/seed', SeedGames);
 app.get('/coming_soon', Upcoming);
+app.get('/search', SearchUpcoming);
 app.get('/gamelist', GameList);
 app.post('/gamelist', AddToGameList);
 
