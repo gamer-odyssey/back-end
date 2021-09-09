@@ -18,9 +18,8 @@ function GameList(req, res) {
       if (email === user.email) {
 
         GameModel.find({ email }, (err, gamesdb) => {
-          res.status(200).send(gamesdb)
+          res.status(200).send(gamesdb);          
         })
-
       } else {
         response.send('authorization failed');
       }
