@@ -15,7 +15,7 @@ async function Upcoming(req, res) {
           'client-id': TClientID,
           'authorization': `Bearer ${tAccessToken}`
         },
-        data: `fields name, summary, platforms.name, first_release_date, cover.image_id; where first_release_date > ${todaysDate}; sort first_release_date asc; offset ${offset}; limit 10;`
+        data: `fields name, summary, screenshots.image_id, platforms.name, first_release_date, cover.image_id; where first_release_date > ${todaysDate}; sort first_release_date asc; offset ${offset}; limit 10;`
       });
       res.send(response.data);
     } catch (error) {
