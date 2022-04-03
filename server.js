@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-  .then(async () => {
+  .then(() => {
     console.log('Connected to the database')
   })
 //-------------------routes---------------//
