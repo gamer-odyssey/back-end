@@ -1,16 +1,16 @@
 'use strict';
 //-------------import/require-------------//
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 app.use(cors());
-require('dotenv').config();
+app.use(express.json())
 const axios = require('axios');
 const mongoose = require('mongoose');
 const GameModel = require('./models/GamesModel');
 const ClearGames = require('./modules/ClearGames');
 const SeedGames = require('./modules/SeedGames');
-app.use(express.json())
 const Upcoming = require('./modules/Upcoming');
 const GameList = require('./modules/GameList');
 const AddToGameList = require('./modules/AddToGameList');
