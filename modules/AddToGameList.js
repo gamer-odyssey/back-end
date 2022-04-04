@@ -9,12 +9,12 @@ function AddToGameList (req,res) {
   
   try {
     let {title, releaseDate, email, note, cover, summary, platforms, screenshots} = req.body;
-    console.log(req.body)
+    // console.log(req.body)
     let game = {title, releaseDate, email, note, cover, summary, platforms, screenshots};
     let newGame = new GameModel(game);
     newGame.save();
     res.send(newGame);
-    console.log(newGame);
+    // console.log(newGame);
   } catch (err) {
     res.status(500).send('Something went wrong adding your Game. Please try again');
     console.log(err.message);
