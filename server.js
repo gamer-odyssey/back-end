@@ -67,7 +67,7 @@ app.put('/gamelist/:id', (req, res) => {
       let email = req.body.params.email;
       if (email === user.email) {
         let { title, releaseDate, email, note, cover, summary, platforms, screenshots } = req.body.params;
-        console.log(platforms);
+        // console.log(platforms);
         const updatedGame = await GameModel.findByIdAndUpdate(gameID, { title, releaseDate, email, note, cover, summary, platforms, screenshots }, { new: true, overwrite: true });
         res.status(200).send(updatedGame);
       } else {
